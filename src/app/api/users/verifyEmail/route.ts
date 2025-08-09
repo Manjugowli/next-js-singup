@@ -17,10 +17,10 @@ export async function POST(request : NextRequest){
         if(!user){
             return NextResponse.json({ error : "User Not Found"} , { status : 400});
         }
-        user.isVerified= true,
-        user.verifyToken= undefined,
-        user.verifyTokenExpiry= undefined
-        await user.save()
+        user.isVerified = true;
+        user.verifyToken = undefined;
+        user.verifyTokenExpiry = undefined;
+        await user.save();
         return  NextResponse.json({ message : "user verified successfully"});
     } catch (error: unknown) {
         console.error("Error in verifying Email:", error);

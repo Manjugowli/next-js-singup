@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect} from "react";
+import React, { useEffect, useCallback} from "react";
 import axios from "axios";
 import Link from "next/link";
 
@@ -10,16 +10,16 @@ export default function verifyEmail(){
     const [ isVerified, setIsVerified] = React.useState(false)
     const [ error, setError] = React.useState(false)
 
-    const verifyEmail = async()=>{
+    const verifyEmail = useCallback(async()=>{
         try {
-            const response = await axios.post(`/api/users/verifyEmail`, {token});
+            await axios.post(`/api/users/verifyEmail`, {token});
             setIsVerified(true);
             setError(false);
         } catch (error) {
             setError(true)
             console.log(error);
         }
-    }
+    }, [token])
     
 
     useEffect(()=>{
@@ -30,7 +30,7 @@ export default function verifyEmail(){
         if( token.length > 0){
             verifyEmail();
         }
-    },[token])
+    },[token,verifyEmail])
 
     return (
       <div className="flex flex-col justify-center min-h-screen w-2xs min-w-screen items-center gap-1">
